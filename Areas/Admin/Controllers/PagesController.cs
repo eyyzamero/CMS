@@ -77,5 +77,27 @@ namespace CMS.Areas.Admin.Controllers
 
 			return RedirectToAction("AddPage");
 		}
+
+		[HttpGet]
+		public ActionResult EditPage(int id)
+		{
+			// Declating PageVM
+			PageVM model;
+
+			using (DB db = new DB())
+			{
+				// Fetching Page by ID
+				PageDTO dto = db.Pages.Find(id);
+				if (dto == null)
+				{
+					return Content("Page does not exist!");
+				}
+
+				// Assigning fetched Page Data to variable model
+				model = new PageVM(dto);
+			}
+
+			return View(model);
+		}
 	}
 }
