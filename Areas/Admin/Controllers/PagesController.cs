@@ -96,8 +96,55 @@ namespace CMS.Areas.Admin.Controllers
 				// Assigning fetched Page Data to variable model
 				model = new PageVM(dto);
 			}
-
 			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult EditPage(PageVM model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+			using (DB db = new DB())
+			{
+				int id = model.Id;
+				string slug = "home";
+
+				// Fetch page to edit it
+				PageDTO dto = db.Pages.Find(id);
+				if (model.Slug != "home")
+				{
+					if (string.IsNullOrWhiteSpace(model.Slug))
+					{
+						slug = model.Title.Replace(" ", "-").ToLower();
+					}
+					else
+					{
+						slug = model.Slug.Replace(" ", "-").ToLower();
+					}
+				}
+
+				// Checking if page is unique
+				if (db.Pages.Where(x => x.Id != id).Any(x => x.Title == model.Title) || db.Pages.Where(x => x.Id != id).Any(x => x.Slug == slug))
+				{
+					ModelState.AddModelError("", "Page Title or Page URL is already taken!");
+				}
+
+				// Parsing DTO
+				dto.Title = model.Title;
+				dto.Slug = slug;
+				dto.Body = model.Body;
+				dto.HasSidebar = model.HasSidebar;
+
+				// Saving Data
+				db.SaveChanges();
+			}
+			// Status variable assignment
+			TempData["SM"] = "Page data successfully modified!";
+
+			// Redirect
+			return RedirectToAction("EditPage");
 		}
 	}
 }
