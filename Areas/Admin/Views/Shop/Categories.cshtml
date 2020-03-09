@@ -147,7 +147,7 @@ else
                 var ajaxdiv = $this.parent().find(".ajax-div-td")
                 var newCatName = $this.val();
                 var id = $this.parent().parent().attr("id").substring(3);
-                var url = "Admin/Shop/RenameCategory";
+                var url = "/Admin/Shop/RenameCategory";
                 if (newCatName.lenth < 2) {
                     alert("Category Name needs to have at least 2 characters!");
                     $this.attr("readonly", true);
@@ -158,9 +158,9 @@ else
                     var response = data.trim();
                     if (response == 'TitleAlreadyTaken') {
                         $this.val(originalTextBoxValue);
-                        ajaxdiv.html("<span class=`alert alert-danger`>Category Name is already taken!</span>").show();
+                        ajaxdiv.html("<span class='alert alert-danger'>Category Name is already taken!</span>").show();
                     } else {
-                        ajaxdiv.html("<span class=`alert alert-success`>Category Name has been changed successfully!</span>").show();
+                        ajaxdiv.html("<span class='alert alert-success'>Category Name changed successfully!</span>").show();
                     }
 
                     setTimeout(function () {
