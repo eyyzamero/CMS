@@ -5,3 +5,12 @@
 .ui-state-highlight {
     border: 1px dashed #ccc;
 }
+
+span.ajax-text {
+    display: none;
+}
+
+.new-cat {
+    position: relative;
+    margin-top: 32px;
+}

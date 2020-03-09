@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CMS.Models.Data
 {
-    [Table("Category")]
+    [Table("Categories")]
     public class CategoryDTO
     {
         [Key]
