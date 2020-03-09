@@ -34,6 +34,7 @@ else
         {
             <tr id="id_@item.Id">
                 <td>
+                    <div class="ajax-div-td"></div>
                     @Html.EditorFor(modelItem => item.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </td>
                 <td>
@@ -78,7 +79,7 @@ else
                     var response = data.trim();
 
                     if (response == "TitleAlreadyTaken") {
-                        ajaxText.html("<span class=`alert alert-danger`>Category Title is already taken!</span>");
+                        ajaxText.html("<span class=`alert alert-danger`>Category Name is already taken!</span>");
                         setTimeout(function () {
                             ajaxText.fadeOut("fast", function () {
                                 ajaxText.html("<img src=/Content/img/ajax-loader.gif />");
@@ -110,7 +111,6 @@ else
             })
 
             // Sorting table
-
             $("table#pages tbody").sortable({
                 items: "tr:not(.home)",
                 placeholder: "ui-state-highlight",
@@ -125,7 +125,6 @@ else
             })
 
             // Deleting category
-
             $("body").on("click", "a.delete", function () {
                 if (!confirm("Are you sure you want to delete this category?")) return false;
             })
@@ -133,6 +132,46 @@ else
             $("a.delete").click(function () {
                 if (!confirm("Are you sure you want to delete?")) return false;
             });
-        })
+
+            // Change Category Name
+            var originalTextBoxValue;
+            $("table#pages input.text-box").dblclick(function () {
+                originalTextBoxValue = $(this).val();
+                $(this).attr("readonly", false);
+            });
+            $("table#pages input.text-box").keyup(function (e) {
+                if (e.keyCode == 13) $(this).blur();
+            })
+            $("table#pages input.text-box").blur(function () {
+                var $this = $(this);
+                var ajaxdiv = $this.parent().find(".ajax-div-td")
+                var newCatName = $this.val();
+                var id = $this.parent().parent().attr("id").substring(3);
+                var url = "Admin/Shop/RenameCategory";
+                if (newCatName.lenth < 2) {
+                    alert("Category Name needs to have at least 2 characters!");
+                    $this.attr("readonly", true);
+                    return false;
+                }
+
+                $.post(url, { newCatName: newCatName, id: id }, function (data) {
+                    var response = data.trim();
+                    if (response == 'TitleAlreadyTaken') {
+                        $this.val(originalTextBoxValue);
+                        ajaxdiv.html("<span class=`alert alert-danger`>Category Name is already taken!</span>").show();
+                    } else {
+                        ajaxdiv.html("<span class=`alert alert-success`>Category Name has been changed successfully!</span>").show();
+                    }
+
+                    setTimeout(function () {
+                        ajaxdiv.fadeOut("fast", function () {
+                            ajaxdiv.html("");
+                        })
+                    }, 2000)
+                }).done(function () {
+                    $this.attr("readonly", true);
+                });
+            });
+        });
     </script>
 }
