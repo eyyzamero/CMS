@@ -9,6 +9,7 @@ namespace CMS.Areas.Admin.Controllers
 	public class PagesController : Controller
 	{
 		// GET Admin/Pages
+		[HttpGet]
 		public ActionResult Index()
 		{
 			// Declaring list of PageVM
@@ -150,6 +151,7 @@ namespace CMS.Areas.Admin.Controllers
 		}
 
 		// GET Admin/Page/Details
+		[HttpGet]
 		public ActionResult Details(int id)
 		{
 			// Declare PageVM
@@ -172,6 +174,7 @@ namespace CMS.Areas.Admin.Controllers
 		}
 
 		// GET Admin/Pages/Delete/Id
+		[HttpGet]
 		public ActionResult Delete(int id)
 		{
 			using (DB db = new DB())
@@ -184,6 +187,28 @@ namespace CMS.Areas.Admin.Controllers
 				db.SaveChanges();
 			}
 			return RedirectToAction("Index");
+		}
+
+		// POST Admin/Pages/ReorderPages
+		[HttpPost]
+		public ActionResult ReorderPages(int[] id)
+		{
+			using (DB db = new DB())
+			{
+				int count = 1;
+				PageDTO dto;
+
+				// Sorting pages and saving to DB
+				foreach (var pageID in id)
+				{
+					dto = db.Pages.Find(pageID);
+					dto.Sorting = count;
+
+					db.SaveChanges();
+					count++;
+				}
+			}
+			return View();
 		}
 	}
 }
