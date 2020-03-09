@@ -7,12 +7,12 @@ namespace CMS.Models.ViewModels.Shop
 {
     public class ProductVM
     {
-        ProductVM()
+        public ProductVM()
         {
 
         }
 
-        ProductVM(ProductDTO row)
+        public ProductVM(ProductDTO row)
         {
             Id = row.Id;
             Name = row.Name;
@@ -26,14 +26,17 @@ namespace CMS.Models.ViewModels.Shop
 
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Product Name")]
         public string Name { get; set; }
         public string Slug { get; set; }
         [Required]
+        [Display(Name = "Describe Product")]
         public string Description { get; set; }
+        [Display(Name = "Product Price")]
         public decimal Price { get; set; }
         public string CategoryName { get; set; }
         [Required]
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public string ImageName { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }
