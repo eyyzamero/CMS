@@ -210,5 +210,42 @@ namespace CMS.Areas.Admin.Controllers
 			}
 			return View();
 		}
+
+		// GET Admin/Pages/EditsSidebar
+		[HttpGet]
+		public ActionResult EditSidebar()
+		{
+			// Declaring SidebarVM
+			SidebarVM model;
+
+			using (DB db = new DB())
+			{
+				// Get SidebarDTO
+				SidebarDTO dto = db.Sidebar.Find(1);
+
+				// Initialize model
+				model = new SidebarVM(dto);
+			}
+			return View(model);
+		}
+
+		// POST Admin/Pages/EditSidebar
+		[HttpPost]
+		public ActionResult EditSidebar(SidebarVM model)
+		{
+			using (DB db = new DB())
+			{
+				// Getting SidebarDTO
+				SidebarDTO dto = db.Sidebar.Find(1);
+
+				// Modyfing Sidebar
+				dto.Body = model.Body;
+
+				// Saving changes
+				db.SaveChanges();
+			}
+			TempData["SM"] = "Sidebar updated successfully!";
+			return RedirectToAction("EditSidebar");
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using CMS.Models.Data;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace CMS.Models.ViewModels.Pages
 {
@@ -29,6 +30,7 @@ namespace CMS.Models.ViewModels.Pages
         public string Slug { get; set; }
         [Required]
         [StringLength(int.MaxValue, MinimumLength = 3)]
+        [AllowHtml]
         [Display(Name = "Page Content")]
         public string Body { get; set; }
         public int Sorting { get; set; }
