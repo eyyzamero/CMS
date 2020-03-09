@@ -51,5 +51,47 @@ namespace CMS.Areas.Admin.Controllers
             }
             return id;
         }
+
+        // POST Admin/Shop/ReorderCategories
+        [HttpPost]
+        public ActionResult ReorderCategories(int[] id)
+        {
+            using (DB db = new DB())
+            {
+                // Counter
+                int count = 1;
+
+                // DTO Declaration
+                CategoryDTO dto;
+
+                // Sorting
+                foreach (var catId in id)
+                {
+                    dto = db.Categories.Find(catId);
+                    dto.Sorting = count;
+
+                    db.SaveChanges();
+
+                    count++;
+                }
+            }
+            return View();
+        }
+
+        // DELETE Admin/Shop/DeleteCategory
+        [HttpGet]
+        public ActionResult DeleteCategory(int id)
+        {
+            using (DB db = new DB())
+            {
+                // Get Category by ID
+                CategoryDTO dto = db.Categories.Find(id);
+                
+                // Delete category
+                db.Categories.Remove(dto);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Categories");
+        }
     }
 }
