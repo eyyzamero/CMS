@@ -8,7 +8,7 @@ namespace CMS.Areas.Admin.Controllers
 {
 	public class PagesController : Controller
 	{
-		// GET: Admin/Pages
+		// GET Admin/Pages
 		public ActionResult Index()
 		{
 			// Declaring list of PageVM
@@ -78,6 +78,7 @@ namespace CMS.Areas.Admin.Controllers
 			return RedirectToAction("AddPage");
 		}
 
+		// GET Admin/Pages/EditPage/Id
 		[HttpGet]
 		public ActionResult EditPage(int id)
 		{
@@ -99,6 +100,7 @@ namespace CMS.Areas.Admin.Controllers
 			return View(model);
 		}
 
+		// POST Admin/Pages/EditPage
 		[HttpPost]
 		public ActionResult EditPage(PageVM model)
 		{
@@ -145,6 +147,43 @@ namespace CMS.Areas.Admin.Controllers
 
 			// Redirect
 			return RedirectToAction("EditPage");
+		}
+
+		// GET Admin/Page/Details
+		public ActionResult Details(int id)
+		{
+			// Declare PageVM
+			PageVM model;
+			using (DB db = new DB())
+			{
+				// Fetching Page by ID
+				PageDTO dto = db.Pages.Find(id);
+
+				// Check if Page exists
+				if (dto == null)
+				{
+					return Content("Page does not exist!");
+				}
+
+				// Initializing PageVM
+				model = new PageVM(dto);
+			}
+			return View(model);
+		}
+
+		// GET Admin/Pages/Delete/Id
+		public ActionResult Delete(int id)
+		{
+			using (DB db = new DB())
+			{
+				// Fetch Page to delete
+				PageDTO dto = db.Pages.Find(id);
+
+				// Deleting selected page
+				db.Pages.Remove(dto);
+				db.SaveChanges();
+			}
+			return RedirectToAction("Index");
 		}
 	}
 }
