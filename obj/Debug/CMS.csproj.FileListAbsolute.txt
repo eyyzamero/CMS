@@ -80,3 +80,7 @@ C:\Projects\NET\CMS\CMS\bin\EntityFramework.dll
 C:\Projects\NET\CMS\CMS\bin\EntityFramework.SqlServer.dll
 C:\Projects\NET\CMS\CMS\bin\EntityFramework.xml
 C:\Projects\NET\CMS\CMS\bin\EntityFramework.SqlServer.xml
+C:\Projects\NET\CMS\CMS\bin\PagedList.dll
+C:\Projects\NET\CMS\CMS\bin\PagedList.Mvc.dll
+C:\Projects\NET\CMS\CMS\bin\PagedList.xml
+C:\Projects\NET\CMS\CMS\bin\PagedList.Mvc.xml
