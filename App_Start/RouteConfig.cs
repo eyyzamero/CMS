@@ -13,11 +13,15 @@ namespace CMS
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+            routes.MapRoute("PageMenuPartial", "Pages/PageMenuPartial", new { controller = "Pages", action = "PageMenuPartial" }, new[] { "CMS.Controllers" });
+            routes.MapRoute("Pages", "{page}", new { controller = "Pages", action = "Index" }, new[] { "CMS.Controllers" });
+            routes.MapRoute("Default", "", new { controller = "Pages", action = "Index" }, new[] { "CMS.Controllers" });
+
+            /*routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            );*/
         }
     }
 }
