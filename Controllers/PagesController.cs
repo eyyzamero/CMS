@@ -56,5 +56,20 @@ namespace CMS.Controllers
             }
             return PartialView(pageVMList);
         }
+
+        public ActionResult SidebarPartial()
+        {
+            // Declaring model
+            SidebarVM model;
+
+            // Model initialization
+            using (DB db = new DB())
+            {
+                SidebarDTO dto = db.Sidebar.Find(1);
+                model = new SidebarVM(dto);
+            }
+
+            return PartialView(model);
+        }
     }
 }
