@@ -434,5 +434,50 @@ namespace CMS.Areas.Admin.Controllers
 
             return RedirectToAction("Products");
         }
+
+        // POST Admin/Shop/SaveGalleryImage/ID
+        [HttpPost]
+        public void SaveGalleryImages(int id)
+        {
+            // Looping over images
+            foreach (string fileName in Request.Files)
+            {
+                HttpPostedFileBase file = Request.Files[fileName];
+                // Checking if file exists and it's not empty
+                if (file != null && file.ContentLength > 0)
+                {
+                    // Setting routes 
+                    var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+                    // Images are thrown to below path
+                    string ToGallery = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+                    // Thumbnails are thrown to below path
+                    string ToGalleryThumbs = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
+
+                    var pathGallery = string.Format("{0}\\{1}", ToGallery, file.FileName);
+                    var pathgalleryThumbs = string.Format("{0}\\{1}", ToGalleryThumbs, file.FileName);
+
+                    // Saving Galler Image 
+                    file.SaveAs(pathGallery);
+
+                    // Saving Thumbnails
+                    WebImage img = new WebImage(file.InputStream);
+                    img.Resize(100, 100);
+                    img.Save(pathgalleryThumbs);
+                }
+            }
+        }
+
+        // POST Admin/Shop/DeleteImage
+        [HttpPost]
+        public void DeleteImage(int id, string imageName)
+        {
+            // Declaring folder structure
+            string ToGallery = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/" + imageName);
+            string ToGalleryThumbs = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/Thumbs/" + imageName);
+
+            // Checking whether data does exist and deleting it
+            if (System.IO.File.Exists(ToGallery)) System.IO.File.Delete(ToGallery);
+            if (System.IO.File.Exists(ToGalleryThumbs)) System.IO.File.Delete(ToGalleryThumbs);
+        }
     }
 }
