@@ -73,8 +73,8 @@ else
 
 @section scripts {
     <script>
-        // Increment product's quality
         $(function () {
+            // Increment product's quantity
             $("a.incrproduct").click(function (e) {
                 e.preventDefault();
                 var productId = $(this).data("id");
@@ -91,6 +91,41 @@ else
                     $("td.grandtotal span").text(grandtotal);
                 })
             });
+
+             // Decrement product's quantity
+            $("a.decrproduct").click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var productId = $(this).data("id");
+                var URL = "/Cart/DecrementProduct";
+                $.getJSON(URL, { productId: productId }, function (data) {
+                    if (data.quantity == 0) {
+                        $this.parent().parent().fadeOut("fast", function () {
+                            location.reload();
+                        })
+                    } else {
+                         $("td.qty" + productId).html(data.quantity);
+                        var price = data.quantity * data.price
+                        var priceHTML = price.toFixed(2) + ' zł';
+
+                        $("td.total" + productId).html(priceHTML);
+
+                        var gt = parseFloat($("td.grandtotal span").text());
+                        var grandtotal = (gt - data.price).toFixed(2);
+                        $("td.grandtotal span").text(grandtotal);
+                    }
+                })
+            });
+
+            // Deleting product from cart
+            $("a.removeproduct").click(function (e) {
+                e.preventDefault();
+                var productId = $(this).data("id");
+                var URL = "/Cart/RemoveProduct";
+                $.get(URL, { productId: productId }, function (data) {
+                    location.reload();
+                })
+            })
         });
     </script>
 }
