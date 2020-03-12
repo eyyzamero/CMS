@@ -32,3 +32,12 @@ span.ajaxmsg {
     padding: 16px;
     bottom: 0;
 }
+
+.ajaxcart {
+    position: relative;
+    margin-top: 10px;
+}
+
+.ib {
+    display: inline-block !important;
+}
