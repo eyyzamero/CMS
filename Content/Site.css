@@ -19,3 +19,16 @@ span.ajax-text {
     position: absolute;
 
 }
+
+span.loader {
+    display: none;
+}
+
+span.ajaxmsg {
+    position: absolute;
+    display: none;
+    color: white;
+    background-color: green;
+    padding: 16px;
+    bottom: 0;
+}
