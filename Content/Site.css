@@ -38,6 +38,11 @@ span.ajaxmsg {
     margin-top: 10px;
 }
 
+.navright {
+    position: relative;
+    margin-top: 10px;
+}
+
 .ib {
     display: inline-block !important;
 }

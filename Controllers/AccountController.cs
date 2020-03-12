@@ -130,5 +130,26 @@ namespace CMS.Controllers
             FormsAuthentication.SignOut();
             return Redirect("~/Account/Login");
         }
+
+        public ActionResult UserNavPartial()
+        {
+            // Fetching username
+            string username = User.Identity.Name;
+
+            // Declaring model
+            UserNavPartialVM model;
+            using(DB db = new DB())
+            {
+                // Get user from DB
+                UserDTO dto = db.Users.FirstOrDefault(x => x.UserName == username);
+
+                model = new UserNavPartialVM()
+                {
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName
+                };
+            }
+            return PartialView(model);
+        } 
     }
 }

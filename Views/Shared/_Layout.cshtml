@@ -25,6 +25,28 @@
                 <ul class="nav navbar-nav navbar-right" style="margin-top: 5px">
                     @Html.Action("CartPartial", "Cart");
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li><a href="/Account/Logout">Logout</a></li>
+                    }
+                    else
+                    {
+                        if (ViewBag.Title == "Login")
+                        {
+                            <li class="active"><a href="/Account/Login">Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/Account/Login">Login</a></li>
+                        }
+
+                    }
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
+                    }
+                </ul>
             </div>
         </div>
     </div>
