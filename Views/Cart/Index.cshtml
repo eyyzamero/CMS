@@ -115,6 +115,11 @@ else
                     var gt = parseFloat($("td.grandtotal span").text());
                     var grandtotal = (gt + data.price).toFixed(2);
                     $("td.grandtotal span").text(grandtotal);
+                }).done(function (data) {
+                    var URL2 = "/Cart/PayPalPartial";
+                    $.get(URL2, { }, function (data) {
+                        $('div.paypaldiv').html(data);
+                    })
                 })
             });
 
@@ -140,6 +145,11 @@ else
                         var grandtotal = (gt - data.price).toFixed(2);
                         $("td.grandtotal span").text(grandtotal);
                     }
+                }).done(function (data) {
+                    var URL2 = "/Cart/PayPalPartial";
+                    $.get(URL2, { }, function (data) {
+                        $('div.paypaldiv').html(data);
+                    })
                 })
             });
 
