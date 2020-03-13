@@ -1,13 +1,10 @@
 ﻿@model IEnumerable<CMS.Models.ViewModels.Shop.CategoryVM>
 
-<h3>Category</h3>
+<h3 class="text-center">Categories</h3>
 
-<ul>
+<ul class="list-group list-group-flush">
     @foreach (var item in Model)
     {
-        <li>
-            <a href="/Shop/Category/@item.Slug.ToLower()">@item.Name</a>
-        </li>
+         <a class="list-group-item list-group-item-action" href="/Shop/Category/@item.Slug.ToLower()">@item.Name</a>
     }
-    
 </ul>

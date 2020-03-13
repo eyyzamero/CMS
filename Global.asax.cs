@@ -19,25 +19,29 @@ namespace CMS
 
         protected void Application_AuthenticateRequest()
         {
-            if(User == null) return;
-            
-            // Fetching user name
-            string username = Context.User.Identity.Name;
-
-            // Declaring roles array
-            string[] Roles = null;
-            using (DB db = new DB())
+            if (User == null)
             {
-                // Fetching user data
-                UserDTO dto = db.Users.FirstOrDefault(x => x.UserName == username);
-                Roles = db.UserRoles.Where(x => x.UserId == dto.Id).Select(x => x.Role.Name).ToArray();
+                return;
             }
 
-            //Creating IPrincipal object
-            IIdentity userIdentity = new GenericIdentity(username);
-            IPrincipal newUserObj = new GenericPrincipal(userIdentity, Roles);
+            // Fetching user data
+            string username = Context.User.Identity.Name;
 
-            // Update context user
+            // Declaring array with roles
+            string[] roles = null;
+
+            using (DB db = new DB())
+            {
+                // Fetching user data to get roles
+                UserDTO dto = db.Users.FirstOrDefault(x => x.UserName == username);
+                roles = db.UserRoles.Where(x => x.UserId == dto.Id).Select(x => x.Role.Name).ToArray();
+            }
+
+            // Creating IPrincipal object
+            IIdentity userIdentity = new GenericIdentity(username);
+            IPrincipal newUserObj = new GenericPrincipal(userIdentity, roles);
+
+            // Update Context.User
             Context.User = newUserObj;
         }
     }

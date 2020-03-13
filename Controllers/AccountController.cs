@@ -111,7 +111,7 @@ namespace CMS.Controllers
                 UserRoleDTO userRoleDTO = new UserRoleDTO()
                 {
                     UserId = userDTO.Id,
-                    RoleId = 2 // 2 = NORMAL USER
+                    RoleId = 1 // 1 = NORMAL USER, 2 = ADMIN
                 };
 
                 // Pushing data to DB
