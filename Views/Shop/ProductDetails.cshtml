@@ -15,15 +15,21 @@
         @Html.DisplayFor(model => model.Description) <br />
         @Html.DisplayFor(model => model.Price) <br />
 
-        <div class="AddToCart">
-            <a href="#" class="AddToCart">Add this item to cart</a>
-            <span class="loader">
-                <img src="~/Content/img/ajax-loader.gif" />
-            </span>
-            <span class="ajaxmsg">
-                This product has been added to your cart
-            </span>
-        </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="AddToCart">
+                <a href="#" class="AddToCart">Add this item to cart</a>
+                <span class="loader">
+                    <img src="~/Content/img/ajax-loader.gif" />
+                </span>
+                <span class="ajaxmsg">
+                    This product has been added to your cart
+                </span>
+            </div>
+        } else
+        {
+            <h4 style="color: red; font-weight: bold">LOGIN TO BUY THIS PRODUCT</h4>
+        }
     </div>
 </div>
 
