@@ -150,6 +150,79 @@ namespace CMS.Controllers
                 };
             }
             return PartialView(model);
-        } 
+        }
+
+        // Get Account/User-Profile
+        [ActionName("User-Profile")]
+        [HttpGet]
+        public ActionResult UserProfile()
+        {
+            // Fetching username
+            string username = User.Identity.Name;
+
+            // Declaring model
+            UserProfileVM model;
+
+            using (DB db = new DB())
+            {
+                // Getting user
+                UserDTO dto = db.Users.FirstOrDefault(x => x.UserName == username);
+                model = new UserProfileVM(dto);
+            }
+            return View("UserProfile", model);
+        }
+
+        [ActionName("User-Profile")]
+        [HttpPost]
+        public ActionResult UserProfile(UserProfileVM model)
+        {
+            // Checking model state
+            if (!ModelState.IsValid)
+            {
+                return View("UserProfile", model);
+            }
+
+            // Validating mail
+            if (!string.IsNullOrEmpty(model.ConfirmPassword))
+            {
+                if (!model.Password.Equals(model.ConfirmPassword))
+                {
+                    ModelState.AddModelError("", "Password do not match");
+                    return View("UserProfile", model);
+                }
+            }
+
+            using (DB db = new DB())
+            {
+                // Fetching user's name
+                string username = User.Identity.Name;
+
+                // Checking whether user name is unique
+                if (db.Users.Where(x => x.Id != model.Id).Any(x => x.UserName == username))
+                {
+                    ModelState.AddModelError("", "User Name" + model.UserName + " is already taken!");
+                    model.UserName = "";
+                    return View("UserProfile", model);
+                }
+
+                // Editing DTO
+                UserDTO dto = db.Users.Find(model.Id);
+                dto.FirstName = model.FirstName;
+                dto.LastName = model.LastName;
+                dto.EmailAdress = model.EmailAdress;
+                dto.UserName = model.UserName;
+
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+                    dto.Password = model.Password;
+                }
+
+                db.SaveChanges();
+            }
+            // Tempdata return message
+            TempData["SM"] = "You have editted your profile successfully!";
+
+            return Redirect("~/Account/User-Profile");
+        }
     }
 }
