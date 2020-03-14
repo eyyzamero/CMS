@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace CMS.Areas.Admin.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	public class PagesController : Controller
 	{
 		// GET Admin/Pages

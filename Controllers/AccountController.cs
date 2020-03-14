@@ -11,13 +11,13 @@ namespace CMS.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Accountt
+        // GET /Account
         public ActionResult Index()
         {
             return RedirectToAction("~/Account/Login");
         }
 
-        // GET Account/Login
+        // GET /Account/Login
         public ActionResult Login()
         {
             // Checking wheter user is not already logged in
@@ -27,7 +27,7 @@ namespace CMS.Controllers
             return View();
         }
 
-        // POST Account/Login
+        // POST /Account/Login
         [HttpPost]
         public ActionResult Login(LoginUserVM model)
         {
@@ -58,7 +58,7 @@ namespace CMS.Controllers
             }
         }
 
-        // GET Account/Create-Account
+        // GET /Account/Create-Account
         [HttpGet]
         [ActionName("Create-Account")]
         public ActionResult CreateAccount()
@@ -66,7 +66,7 @@ namespace CMS.Controllers
             return View("CreateAccount");
         }
 
-        // POST Account/Create-Account
+        // POST /Account/Create-Account
         [HttpPost]
         [ActionName("Create-Account")]
         public ActionResult CreateAccount(UserVM model)
@@ -127,12 +127,14 @@ namespace CMS.Controllers
         }
 
         // GET /Account/Logout
+        [Authorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return Redirect("~/Account/Login");
         }
 
+        [Authorize]
         public ActionResult UserNavPartial()
         {
             // Fetching username
@@ -154,7 +156,8 @@ namespace CMS.Controllers
             return PartialView(model);
         }
 
-        // Get Account/User-Profile
+        // GET /Account/User-Profile
+        [Authorize]
         [ActionName("User-Profile")]
         [HttpGet]
         public ActionResult UserProfile()
@@ -174,6 +177,8 @@ namespace CMS.Controllers
             return View("UserProfile", model);
         }
 
+        // POST /Account/User-Profile
+        [Authorize]
         [ActionName("User-Profile")]
         [HttpPost]
         public ActionResult UserProfile(UserProfileVM model)
@@ -228,6 +233,7 @@ namespace CMS.Controllers
         }
 
         // GET /Account/Orders
+        [Authorize(Roles="User")]
         [HttpGet]
         public ActionResult Orders()
         {
