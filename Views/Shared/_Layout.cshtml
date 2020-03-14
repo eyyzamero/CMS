@@ -16,15 +16,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-               <a href="/" class="navbar-brand">CMS</a>
+                <a href="/" class="navbar-brand" style="margin: 0; padding: 0">
+                    <img src="~/Content/img/brand.png" width="70" height="40"/>
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @Html.Action("PageMenuPartial", "Pages");
                 </ul>
-                <ul class="nav navbar-nav navbar-right" style="margin-top: 5px">
-                    @Html.Action("CartPartial", "Cart");
-                </ul>
+                @if (Request.IsAuthenticated && User.IsInRole("User"))
+                {
+                    <ul class="nav navbar-nav navbar-right" style="margin-top: 5px">
+                        @Html.Action("CartPartial", "Cart");
+                    </ul>
+                }
+
                 <ul class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated)
                     {
@@ -59,16 +65,37 @@
     <div class="container body-content">
         <div class="row">
 
-            <div class="col-xs-12 col-md-2">
-                @Html.Action("CategoryMenuPartial", "Shop");
-            </div>
+            @if (ViewBag.Title != "Create Account" && ViewBag.Title != "Login" && ViewBag.Title != "User Profile" && ViewBag.Title != "Your Orders")
+            {
+                <div class="col-xs-12 col-md-2">
+                    @Html.Action("CategoryMenuPartial", "Shop");
+                </div>
+            }
+
+            @if (ViewBag.Title == "User Profile")
+            {
+                <div class="col-xs-12 col-md-2">
+                    <ul class="list-group list-group-flush">
+                        <a class="list-group-item list-group-item-action" href="/Account/Orders">Orders</a>
+                    </ul>
+                </div>
+            }
+
+            @if (ViewBag.Title == "Your Orders")
+            {
+                <div class="col-xs-12 col-md-2">
+                    <ul class="list-group list-group-flush">
+                        <a class="list-group-item list-group-item-action" href="/Account/User-Profile">Profile</a>
+                    </ul>
+                </div>
+            }
 
             @if (ViewBag.Sidebar == true)
             {
                 <div class="col-xs-12 col-md-8">
                     @RenderBody();
                 </div>
-                <div class="col-xs-12 col-md-3">
+                <div class="col-xs-12 col-md-2">
                     @Html.Action("SidebarPartial", "Pages");
                 </div>
             }
@@ -79,11 +106,11 @@
                 </div>
             }
         </div>
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - CMS</p>
-            </footer>
-        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - CMS</p>
+        </footer>
+    </div>
 
     @Scripts.Render("~/bundles/scripts")
     @RenderSection("scripts", required: false)
