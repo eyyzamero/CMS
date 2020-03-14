@@ -1,6 +1,8 @@
 ﻿using CMS.Models.Data;
 using CMS.Models.ViewModels.Account;
+using CMS.Models.ViewModels.Shop;
 using CMS.Views.Account;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -223,6 +225,60 @@ namespace CMS.Controllers
             TempData["SM"] = "You have editted your profile successfully!";
 
             return Redirect("~/Account/User-Profile");
+        }
+
+        // GET /Account/Orders
+        [HttpGet]
+        public ActionResult Orders()
+        {
+            // Initalize listt of orders for logged in user
+            List<OrdersForUserVM> ordersForUser = new List<OrdersForUserVM>();
+
+            using (DB db = new DB())
+            {
+                // Get user id
+                UserDTO user = db.Users.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+                int userId = user.Id;
+
+                // Getting orders for user
+                List<OrderVM> orders = db.Orders.Where(x => x.UserId == userId).ToArray().Select(x => new OrderVM(x)).ToList();
+
+                foreach (var order in orders)
+                {
+                    // Initalize dictionary of products
+                    Dictionary<string, int> productsAndQuantity = new Dictionary<string, int>();
+                    decimal total = 0m;
+
+                    // Fetching order details
+                    List<OrderDetailsDTO> orderDetailsDTO = db.OrderDetails.Where(x => x.OrderId == order.OrderId).ToList();
+
+                    foreach (var orderDetails in orderDetailsDTO)
+                    {
+                        // Fetch product
+                        ProductDTO product = db.Products.Where(x => x.Id == orderDetails.ProductId).FirstOrDefault();
+
+                        // Price Assignment
+                        decimal price = product.Price;
+
+                        // Product name Assignment
+                        string productName = product.Name;
+
+                        // Adding product to the dictionary
+                        productsAndQuantity.Add(productName, orderDetails.Quantity);
+
+                        total += orderDetails.Quantity * price;
+                    }
+
+                    ordersForUser.Add(new OrdersForUserVM()
+                    {
+                        OrderNumber = order.OrderId,
+                        Total = total,
+                        ProductsAndQuantity = productsAndQuantity,
+                        CreatedAt = order.CreatedAt
+                    });
+                }
+            } 
+            return View(ordersForUser);
         }
     }
 }

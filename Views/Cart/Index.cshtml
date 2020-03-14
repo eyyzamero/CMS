@@ -79,7 +79,7 @@ else
         <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
             <input type="hidden" name="cmd" value="_cart" />
             <input type="hidden" name="upload" value="1" />
-            <input type="hidden" name="business" value="sb-dubwx894804_api1.business.example.com" />
+            <input type="hidden" name="business" value="admin@g-way.pl" />
 
             @foreach (var item in Model)
             {
@@ -90,6 +90,7 @@ else
             }
 
             <input type="hidden" name="currency_code" value="PLN" />
+            <input type="image" src="~/Content/img/ajax-loader.gif" name="submit" alt=""/>
         </form>
     </div>
 
@@ -160,6 +161,20 @@ else
                 var URL = "/Cart/RemoveProduct";
                 $.get(URL, { productId: productId }, function (data) {
                     location.reload();
+                })
+            })
+
+            // Placing order
+             $("a.placeorder").click(function (e) {
+                e.preventDefault();
+                 var URL = "/Cart/PlaceOrder";
+                 $(".ajaxbg").show();
+                 $.post(URL, { }, function (data) {
+                     $(".ajaxbg span").text("You are now getting redirected to PayPal");
+                     console.log(data);
+                     setTimeout(function () {
+                         $('form input[name="submit"]').click();
+                     }, 2000);
                 })
             })
         });

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CMS.Models.ViewModels.Account.OrdersForUserVM>
+
+@{
+    ViewBag.Title = "Your Orders";
+}
+
+<h2>Your Orders</h2>
+
+@if (!Model.Any())
+{
+    <h3>You haven't placed any order yet</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Order Number
+            </th>
+            <th>
+                Order Details
+            </th>
+            <th>
+                Placed at
+            </th>
+            <th>
+                Total
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderNumber)
+                </td>
+                <td>
+                   @foreach (var item2 in item.ProductsAndQuantity)
+                   {
+                       @item2.Key @:x @item2.Value <br />
+                   }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

@@ -1,7 +1,10 @@
 ﻿using CMS.Models.Data;
 using CMS.Models.ViewModels.Cart;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 
 namespace CMS.Controllers
@@ -172,6 +175,64 @@ namespace CMS.Controllers
             List<CartVM> cart = Session["cart"] as List<CartVM>;
 
             return PartialView(cart);
+        }
+
+        [HttpPost]
+        public void PlaceOrder()
+        {
+            // Fetching contents of the cart in session
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            // Get user name
+            string username = User.Identity.Name;
+
+            // Declaring number of order
+            int orderId = 0;
+
+            using (DB db = new DB())
+            {
+                // Initialize OrderDTO
+                OrderDTO orderDTO = new OrderDTO();
+
+                // Get UserId
+                var user = db.Users.FirstOrDefault(x => x.UserName == username);
+                int userId = user.Id;
+
+                // Set OrderDTO and save 
+                orderDTO.UserId = userId;
+                orderDTO.CreatedAt = DateTime.Now;
+
+                db.Orders.Add(orderDTO);
+                db.SaveChanges();
+
+                // Fetching ID of saved order
+                orderId = orderDTO.OrderId;
+
+                // Initialize OrderDetailsDTO
+                OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
+
+                foreach (var item in cart)
+                {
+                    orderDetailsDTO.OrderId = orderId;
+                    orderDetailsDTO.UserId = userId;
+                    orderDetailsDTO.ProductId = item.ProductId;
+                    orderDetailsDTO.Quantity = item.Quantity;
+
+                    db.OrderDetails.Add(orderDetailsDTO);
+                    db.SaveChanges();
+                }
+            }
+
+            // Send email to ADMIN that new order is active
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("405f212db24e40", "6bbf21865479f6"),
+                EnableSsl = true
+            };
+            client.Send("admin@example.com", "admin@example.com", "New Order Placed", "New order has been created on your CMS \n OrderId: " + orderId);
+
+            // Reset session
+            Session["cart"] = null;
         }
     }
 }
