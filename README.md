@@ -1,4 +1,4 @@
-# CMS (Aplikacja jeszcze rozbudowywana)
+# CMS
 
 Technologie użyte do napisania aplikacji:
 - ASP.NET MVC 5
@@ -29,8 +29,3 @@ Technologie użyte do napisania aplikacji:
 | Produkt   |      Koszyk       |
 |:----------:|:-------------:|
 | <img src="https://user-images.githubusercontent.com/59890819/76678729-70533a80-65da-11ea-8516-de2b3e70045e.PNG" width="200" alt=""> |  <img src="https://user-images.githubusercontent.com/59890819/76678730-70533a80-65da-11ea-8be5-301466dba913.PNG" width="200" alt=""> | 
-
-## Żeby uruchomić appkę u siebie należy: 
-
-- Sklonować to repozytorium
-- Visual Studio otworzyć w pobranym folderze i uruchomić
