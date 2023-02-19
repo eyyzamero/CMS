@@ -1,6 +1,6 @@
 # CMS
 
-Aplikacja powstała wskutek nauki programowania i udostępnia przejrzysty interfejs dla użytkownika, dzięki któremu użytkownik jest w stanie przeglądać zawartość sklepu internetowego oraz dokonywać zakupów. Administrator strony ma również możliwość zarządzania zawartością strony
+Aplikacja powstała wskutek nauki programowania - udostępnia przejrzysty interfejs dla użytkownika, dzięki któremu użytkownik jest w stanie przeglądać zawartość sklepu internetowego oraz dokonywać zakupów. Administrator strony ma również możliwość zarządzania zawartością strony.
 
 ## Technologie użyte do napisania aplikacji:
 - ASP.NET MVC 5
