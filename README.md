@@ -1,6 +1,8 @@
 # CMS
 
-Technologie użyte do napisania aplikacji:
+Aplikacja powstała wskutek nauki programowania i udostępnia przejrzysty interfejs dla użytkownika, dzięki któremu użytkownik jest w stanie przeglądać zawartość sklepu internetowego oraz dokonywać zakupów. Administrator strony ma również możliwość zarządzania zawartością strony
+
+## Technologie użyte do napisania aplikacji:
 - ASP.NET MVC 5
 - Entity Framework 6.4
 - LocalDB
@@ -15,17 +17,15 @@ Technologie użyte do napisania aplikacji:
 - Przejrzysty nieinwazyjny design
 - Rejestracja / Logowanie / Role
 
-## Screenshoty z appki
+## Screenshoty
 
-| Logowanie   |      Strona Główna       |  Lista produktów  |
-|:----------:|:-------------:|:------:|
-| <img src="https://user-images.githubusercontent.com/59890819/76678723-6df0e080-65da-11ea-95da-756af02baeaa.PNG" width="200" alt=""> |  <img src="https://user-images.githubusercontent.com/59890819/76678724-6f220d80-65da-11ea-8fe1-beea95077a29.PNG" width="200" alt=""> | <img src="https://user-images.githubusercontent.com/59890819/76678725-6f220d80-65da-11ea-8068-4f12d7eb7296.PNG" width="200" alt=""> |
-
-| CMS Kategorie   |      CMS Produkty       |  CMS Zamówienia  |
-|:----------:|:-------------:|:------:|
-| <img src="https://user-images.githubusercontent.com/59890819/76678726-6f220d80-65da-11ea-8109-b44da1006c19.PNG" width="200" alt=""> |  <img src="https://user-images.githubusercontent.com/59890819/76678727-6fbaa400-65da-11ea-9369-d68877428ce8.PNG" width="200" alt=""> | <img src="https://user-images.githubusercontent.com/59890819/76678728-6fbaa400-65da-11ea-8081-73003d246c15.PNG" width="200" alt=""> |
-
-
-| Produkt   |      Koszyk       |
-|:----------:|:-------------:|
-| <img src="https://user-images.githubusercontent.com/59890819/76678729-70533a80-65da-11ea-8516-de2b3e70045e.PNG" width="200" alt=""> |  <img src="https://user-images.githubusercontent.com/59890819/76678730-70533a80-65da-11ea-8be5-301466dba913.PNG" width="200" alt=""> | 
+| Screenshot | Opis |
+| :---:       | :---: |
+| <img src="https://user-images.githubusercontent.com/88888347/219944084-17fc9347-4ca8-439b-ac81-e1be646ae6e3.png" width="200"> | Logowanie |
+| <img src="https://user-images.githubusercontent.com/88888347/219944389-9554684a-c2b4-4796-b2dc-773c2bd9cc41.png" width="200"> | Strona główna |
+| <img src="https://user-images.githubusercontent.com/88888347/219944497-c2af3ea8-c961-468e-b9e6-2e7f159cbd99.png" width="200"> | Lista produktów |
+| <img src="https://user-images.githubusercontent.com/88888347/219944518-435bac32-c3da-414c-8f47-21bcf1f41217.png" width="200"> | Kategorie produktów |
+| <img src="https://user-images.githubusercontent.com/88888347/219944583-1f66dc35-96d4-416c-96a9-ca1a82adf4d1.png" width="200"> | Zarządzanie produktami |
+| <img src="https://user-images.githubusercontent.com/88888347/219944599-870ce94e-af25-4ec7-af4a-655de3ae0d8b.png" width="200"> | Złożone zamówienia |
+| <img src="https://user-images.githubusercontent.com/88888347/219944648-f57142a7-6336-4a94-94f7-e13d47a0d5ca.png" width="200"> | Szczegóły produktu |
+| <img src="https://user-images.githubusercontent.com/88888347/219944677-657d3a78-1cde-4236-9186-d12382585ae0.png" width="200"> | Koszyk |
